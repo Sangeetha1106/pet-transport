@@ -127,12 +127,11 @@ const CONFIG = {
 
   /* ---------- Routes explorer ---------- */
   const ROUTES = {
-    road:  { icon: "#i-van",   info: "Road · Door-to-door", list: [["Chennai","Bangalore"],["Chennai","Pondicherry"],["Coimbatore","Chennai"],["Bangalore","Hyderabad"],["Madurai","Chennai"],["Chennai","Tirupati"]] },
-    train: { icon: "#i-train", info: "Train · Station pick-up & home drop", list: [["Chennai","Mumbai"],["Chennai","Delhi"],["Bangalore","Kolkata"],["Coimbatore","Hyderabad"],["Chennai","Kochi"],["Madurai","Bangalore"]] },
-    air:   { icon: "#i-plane", info: "International flight · Airport to doorstep", list: [["India","USA"],["India","Canada"],["India","UK"],["India","UAE"],["India","Australia"],["India","Singapore"]] }
+    train: { icon: "#i-train", info: "Train · Railway-to-railway & Door-to-door", list: [["Chennai","Mumbai"],["Chennai","Delhi"],["Bangalore","Kolkata"],["Coimbatore","Hyderabad"],["Chennai","Kochi"],["Madurai","Bangalore"],["Chennai","Bangalore"],["Bangalore","Delhi"]] },
+    air:   { icon: "#i-plane", info: "Airport Flight · Domestic & International", list: [["India","USA"],["India","Canada"],["India","UK"],["India","UAE"],["India","Australia"],["India","Singapore"],["Chennai","Delhi"],["Bangalore","Mumbai"]] }
   };
   const listEl = $("#routeList"), path = $("#routePath"), mover = $("#mover"), moverIcon = $("#moverIcon");
-  let mode = "road", raf, pathLen = 0;
+  let mode = "train", raf, pathLen = 0;
 
   function renderRoutes() {
     listEl.innerHTML = "";
