@@ -4,8 +4,8 @@
 
 /* ----------  EDIT YOUR BUSINESS DETAILS HERE  ---------- */
 const CONFIG = {
-  whatsapp: "919999999999",            // country code + number, no "+" or spaces
-  phoneDisplay: "+91 99999 99999",
+  whatsapp: "919171319767",            // country code + number, no "+" or spaces
+  phoneDisplay: "+91 91713 19767",
   email: "hello@sriyogipettransport.com",
   defaultMessage: "Hi Sri Yogi Pet Transport, I would like to enquire about pet transportation."
 };
@@ -201,26 +201,28 @@ const CONFIG = {
   if (form) form.addEventListener("submit", (e) => {
     e.preventDefault();
     const d = Object.fromEntries(new FormData(form).entries());
-    let ok = true;
-    ["name", "phone", "service"].forEach(n => {
-      const f = form.elements[n].closest(".field");
-      const bad = !String(d[n] || "").trim() || (n === "phone" && String(d[n]).replace(/\D/g, "").length < 10);
-      f.classList.toggle("has-error", bad);
-      if (bad) ok = false;
-    });
-    if (!ok) { note.textContent = "Please fill name, a valid phone number and the service."; note.style.color = "#d64545"; return; }
-    note.style.color = ""; note.textContent = "Opening WhatsApp with your enquiry…";
-    const lines = [
-      "*New Enquiry – Sri Yogi Pet Transport*",
-      `Name: ${d.name}`,
-      `Phone: ${d.phone}`,
-      `Service: ${d.service}`,
-      d.from || d.to ? `Route: ${d.from || "-"} → ${d.to || "-"}` : "",
-      `Pet: ${d.pet}${d.breed ? " (" + d.breed + ")" : ""}`,
-      d.date ? `Travel date: ${d.date}` : "",
-      d.msg ? `Message: ${d.msg}` : ""
-    ].filter(Boolean).join("\n");
-    window.open(waUrl(lines), "_blank", "noopener");
+    const hasDetails = d.name || d.phone || d.service || d.from || d.to || d.pet;
+    
+    if (note) {
+      note.style.color = "";
+      note.textContent = "Opening WhatsApp to send your enquiry…";
+    }
+
+    if (hasDetails) {
+      const lines = [
+        "*New Enquiry – Sri Yogi Pet Transport*",
+        d.name ? `Name: ${d.name}` : "",
+        d.phone ? `Phone: ${d.phone}` : "",
+        d.service ? `Service: ${d.service}` : "",
+        (d.from || d.to) ? `Route: ${d.from || "-"} → ${d.to || "-"}` : "",
+        d.pet ? `Pet: ${d.pet}${d.breed ? " (" + d.breed + ")" : ""}` : "",
+        d.date ? `Travel date: ${d.date}` : "",
+        d.msg ? `Message: ${d.msg}` : ""
+      ].filter(Boolean).join("\n");
+      window.open(waUrl(lines), "_blank", "noopener");
+    } else {
+      window.open(waUrl(), "_blank", "noopener");
+    }
   });
   if (form) $$(".field input,.field select", form).forEach(el => el.addEventListener("input", () => el.closest(".field").classList.remove("has-error")));
 
